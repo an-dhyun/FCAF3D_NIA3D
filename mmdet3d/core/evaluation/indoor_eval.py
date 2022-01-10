@@ -147,9 +147,12 @@ def eval_det_cls(pred, gt, iou_thr=None):
 
     ret = []
     for iou_idx, thresh in enumerate(iou_thr):
+        print("iou_idx, thresh", iou_idx, thresh)
         # compute precision recall
         fp = np.cumsum(fp_thr[iou_idx])
         tp = np.cumsum(tp_thr[iou_idx])
+        print("tp size", len(tp))
+        print("npos", float(npos))
         recall = tp / float(npos)
         # avoid divide by zero in case the first detection matches a difficult
         # ground truth
@@ -179,6 +182,8 @@ def eval_map_recall(pred, gt, ovthresh=None):
     """
 
     ret_values = {}
+    print("key list", gt.keys())
+    print("ovthresh", ovthresh)
     for classname in gt.keys():
         if classname in pred:
             ret_values[classname] = eval_det_cls(pred[classname],
@@ -196,7 +201,7 @@ def eval_map_recall(pred, gt, ovthresh=None):
                 recall[iou_idx][label] = np.zeros(1)
                 precision[iou_idx][label] = np.zeros(1)
                 ap[iou_idx][label] = np.zeros(1)
-
+    print(ap)
     return recall, precision, ap
 
 
@@ -231,6 +236,8 @@ def indoor_eval(gt_annos,
     assert len(dt_annos) == len(gt_annos)
     pred = {}  # map {class_id: pred}
     gt = {}  # map {class_id: gt}
+    print("len dt_annos",len(dt_annos))
+    print(label2cat)
     for img_id in range(len(dt_annos)):
         # parse detected annotations
         det_anno = dt_annos[img_id]
@@ -259,7 +266,10 @@ def indoor_eval(gt_annos,
         else:
             gt_boxes = box_type_3d(np.array([], dtype=np.float32))
             labels_3d = np.array([], dtype=np.int64)
-
+        print("len", len(labels_3d))
+        if(len(labels_3d) != 0):
+            print(gt_anno['class'])
+            print(gt_anno['gt_num'])
         for i in range(len(labels_3d)):
             label = labels_3d[i]
             bbox = gt_boxes[i]
@@ -268,6 +278,16 @@ def indoor_eval(gt_annos,
             if img_id not in gt[label]:
                 gt[label][img_id] = []
             gt[label][img_id].append(bbox)
+            if label == 6:
+                bbox = gt_boxes[i]
+                if 4 not in gt:
+                    gt[4] = {}
+                if img_id not in gt[4]:
+                    gt[4][img_id] = []
+                gt[4][img_id].append(bbox)
+    print(gt.keys())
+    for label in gt.keys():
+        print(label2cat[label])
 
     rec, prec, ap = eval_map_recall(pred, gt, metric)
     ret_dict = dict()

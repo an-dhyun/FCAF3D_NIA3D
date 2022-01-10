@@ -31,6 +31,7 @@ class SingleStageSparse3DDetector(Base3DDetector):
 
     def extract_feat(self, points, img_metas):
         """Extract features from points."""
+
         coordinates, features = ME.utils.batch_sparse_collate(
             [(p[:, :3] / self.voxel_size, p[:, 3:] / 255.) for p in points],
             device=points[0].device)

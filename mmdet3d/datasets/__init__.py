@@ -21,6 +21,7 @@ from .semantickitti_dataset import SemanticKITTIDataset
 from .sunrgbd_dataset import SUNRGBDDataset
 from .utils import get_loading_pipeline
 from .waymo_dataset import WaymoDataset
+from .dtaas_dataset import DTAASDataset
 
 __all__ = [
     'KittiDataset', 'KittiMonoDataset', 'GroupSampler',
@@ -34,5 +35,5 @@ __all__ = [
     'ScanNetSegDataset', 'SemanticKITTIDataset', 'Custom3DDataset',
     'Custom3DSegDataset', 'LoadPointsFromMultiSweeps', 'WaymoDataset',
     'BackgroundPointsFilter', 'VoxelBasedPointSampler', 'get_loading_pipeline',
-    'RandomDropPointsColor', 'RandomJitterPoints', 'ObjectNameFilter'
+    'RandomDropPointsColor', 'RandomJitterPoints', 'ObjectNameFilter', 'DTAASDataset'
 ]

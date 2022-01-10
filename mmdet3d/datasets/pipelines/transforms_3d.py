@@ -807,7 +807,7 @@ class ObjectNameFilter(object):
                                   dtype=np.bool_)
         input_dict['gt_bboxes_3d'] = input_dict['gt_bboxes_3d'][gt_bboxes_mask]
         input_dict['gt_labels_3d'] = input_dict['gt_labels_3d'][gt_bboxes_mask]
-
+        print(input_dict)
         return input_dict
 
     def __repr__(self):

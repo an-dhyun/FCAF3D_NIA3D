@@ -5,6 +5,7 @@ import os
 from tools.data_converter.s3dis_data_utils import S3DISData, S3DISSegData
 from tools.data_converter.scannet_data_utils import ScanNetData, ScanNetSegData
 from tools.data_converter.sunrgbd_data_utils import SUNRGBDData
+from tools.data_converter.dtaas_data_utils import DTAASData
 
 
 def create_indoor_info_file(data_path,
@@ -24,13 +25,13 @@ def create_indoor_info_file(data_path,
         workers (int): Number of threads to be used. Default: 4.
     """
     assert os.path.exists(data_path)
-    assert pkl_prefix in ['sunrgbd', 'scannet', 's3dis'], \
+    assert pkl_prefix in ['sunrgbd', 'scannet', 's3dis', 'dtaas'], \
         f'unsupported indoor dataset {pkl_prefix}'
     save_path = data_path if save_path is None else save_path
     assert os.path.exists(save_path)
 
     # generate infos for both detection and segmentation task
-    if pkl_prefix in ['sunrgbd', 'scannet']:
+    if pkl_prefix in ['sunrgbd', 'scannet', 'dtaas']:
         train_filename = os.path.join(save_path,
                                       f'{pkl_prefix}_infos_train.pkl')
         val_filename = os.path.join(save_path, f'{pkl_prefix}_infos_val.pkl')
@@ -40,13 +41,19 @@ def create_indoor_info_file(data_path,
                 root_path=data_path, split='train', use_v1=use_v1)
             val_dataset = SUNRGBDData(
                 root_path=data_path, split='val', use_v1=use_v1)
-        else:
+        elif pkl_prefix == 'scannet':
             # ScanNet has a train-val-test split
             train_dataset = ScanNetData(root_path=data_path, split='train')
             val_dataset = ScanNetData(root_path=data_path, split='val')
             test_dataset = ScanNetData(root_path=data_path, split='test')
             test_filename = os.path.join(save_path,
                                          f'{pkl_prefix}_infos_test.pkl')
+        elif pkl_prefix == 'dtaas':
+            # DTAAS has a train-val split
+            train_dataset = DTAASData(
+                root_path=data_path, split='train', use_v1=use_v1)
+            val_dataset = DTAASData(
+                root_path=data_path, split='val', use_v1=use_v1)
 
         infos_train = train_dataset.get_infos(
             num_workers=workers, has_label=True)
