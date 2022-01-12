@@ -1,0 +1,27 @@
+Traceback (most recent call last):
+  File "tools/train.py", line 223, in <module>
+    main()
+  File "tools/train.py", line 132, in main
+    init_dist(args.launcher, **cfg.dist_params)
+  File "/opt/conda/lib/python3.7/site-packages/mmcv/runner/dist_utils.py", line 20, in init_dist
+    _init_dist_pytorch(backend, **kwargs)
+  File "/opt/conda/lib/python3.7/site-packages/mmcv/runner/dist_utils.py", line 34, in _init_dist_pytorch
+    dist.init_process_group(backend=backend, **kwargs)
+  File "/opt/conda/lib/python3.7/site-packages/torch/distributed/distributed_c10d.py", line 500, in init_process_group
+    store, rank, world_size = next(rendezvous_iterator)
+  File "/opt/conda/lib/python3.7/site-packages/torch/distributed/rendezvous.py", line 190, in _env_rendezvous_handler
+    store = TCPStore(master_addr, master_port, world_size, start_daemon, timeout)
+RuntimeError: Address already in use
+Traceback (most recent call last):
+  File "/opt/conda/lib/python3.7/runpy.py", line 193, in _run_module_as_main
+    "__main__", mod_spec)
+  File "/opt/conda/lib/python3.7/runpy.py", line 85, in _run_code
+    exec(code, run_globals)
+  File "/opt/conda/lib/python3.7/site-packages/torch/distributed/launch.py", line 340, in <module>
+    main()
+  File "/opt/conda/lib/python3.7/site-packages/torch/distributed/launch.py", line 326, in main
+    sigkill_handler(signal.SIGTERM, None)  # not coming back
+  File "/opt/conda/lib/python3.7/site-packages/torch/distributed/launch.py", line 301, in sigkill_handler
+    raise subprocess.CalledProcessError(returncode=last_return_code, cmd=cmd)
+subprocess.CalledProcessError: Command '['/opt/conda/bin/python3', '-u', 'tools/train.py', '--local_rank=0', 'configs/fcaf3d/fcaf3d_dtaas-3d-9class.py', '--launcher', 'pytorch']' returned non-zero exit status 1.
+Killing subprocess 490425

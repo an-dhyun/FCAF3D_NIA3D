@@ -66,8 +66,7 @@ class DTAASData(object):
         self.split = split
         self.split_dir = osp.join(root_path, 'dtaas_trainval')
         self.classes = [
-            'bed', 'table', 'sofa', 'chair', 'desk', 'lighting',
-            'tv', 'storage_closet', 'computer'
+            'bed', 'table', 'sofa', 'chair', 'lighting', 'storage_closet'
         ]
         self.cat2label = {cat: self.classes.index(cat) for cat in self.classes}
         self.label2cat = {
@@ -100,7 +99,6 @@ class DTAASData(object):
     def get_depth(self, idx):
         depth_filename = osp.join(self.depth_dir, f'{idx:06d}.mat')
         depth = sio.loadmat(depth_filename)['instance']
-        print(depth)
         return depth
 
     def get_calibration(self, idx):

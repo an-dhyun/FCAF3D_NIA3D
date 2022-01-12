@@ -58,10 +58,22 @@ def create_indoor_info_file(data_path,
         infos_train = train_dataset.get_infos(
             num_workers=workers, has_label=True)
         mmcv.dump(infos_train, train_filename, 'pkl')
+        # try:
+        #     infos_train = np.where(infos_train[0]['annos']['class']==5, 4, infos_train)
+        #     infos_train = np.where(infos_train[0]['annos']['class']==7, 5, infos_train)
+        # except:
+        #     exit
+        print(infos_train)
         print(f'{pkl_prefix} info train file is saved to {train_filename}')
 
         infos_val = val_dataset.get_infos(num_workers=workers, has_label=True)
         mmcv.dump(infos_val, val_filename, 'pkl')
+        # try:
+        #     infos_val = np.where(infos_val[0]['annos']['class']==5, 4, infos_train)
+        #     infos_val = np.where(infos_val[0]['annos']['class']==7, 5, infos_train)
+        # except:
+        #     exit
+        print(infos_val)
         print(f'{pkl_prefix} info val file is saved to {val_filename}')
 
     if pkl_prefix == 'scannet':
