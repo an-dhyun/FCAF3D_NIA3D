@@ -212,6 +212,12 @@ def indoor_eval(gt_annos,
                 logger=None,
                 box_type_3d=None,
                 box_mode_3d=None):
+    print("=========indoor_eval=========")
+    print("gt_annos: ", gt_annos)
+    print("dt_annos", dt_annos)
+    print("metric: ", metric)
+    print("label2cat: ", label2cat)
+    print("=============================")
     """Indoor Evaluation.
 
     Evaluate the result of the detection.
@@ -278,13 +284,13 @@ def indoor_eval(gt_annos,
             if img_id not in gt[label]:
                 gt[label][img_id] = []
             gt[label][img_id].append(bbox)
-            if label == 6:
-                bbox = gt_boxes[i]
-                if 4 not in gt:
-                    gt[4] = {}
-                if img_id not in gt[4]:
-                    gt[4][img_id] = []
-                gt[4][img_id].append(bbox)
+            # if label == 6:
+            #     bbox = gt_boxes[i]
+            #     if 4 not in gt:
+            #         gt[4] = {}
+            #     if img_id not in gt[4]:
+            #         gt[4][img_id] = []
+            #     gt[4][img_id].append(bbox)
     print(gt.keys())
     for label in gt.keys():
         print(label2cat[label])

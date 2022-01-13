@@ -113,6 +113,7 @@ def inference_detector(model, pcd):
     # forward the model
     with torch.no_grad():
         result = model(return_loss=False, rescale=True, **data)
+    print(result)
     return result, data
 
 
@@ -296,6 +297,7 @@ def show_det_result_meshlab(data,
                             show=False,
                             snapshot=False):
     """Show 3D detection result by meshlab."""
+    print(result)
     points = data['points'][0][0].cpu().numpy()
     pts_filename = data['img_metas'][0][0]['pts_filename']
     file_name = osp.split(pts_filename)[-1].split('.')[0]
