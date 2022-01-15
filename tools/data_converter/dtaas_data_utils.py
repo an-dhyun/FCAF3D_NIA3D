@@ -66,7 +66,7 @@ class DTAASData(object):
         self.split = split
         self.split_dir = osp.join(root_path, 'dtaas_trainval')
         self.classes = [
-            'bed', 'table', 'sofa', 'chair', 'lighting', 'storage_closet'
+            'door', 'window', 'table', 'desk', 'chair', 'sofa', 'storage_closet', 'tv', 'lighting', 'computer'
         ]
         self.cat2label = {cat: self.classes.index(cat) for cat in self.classes}
         self.label2cat = {

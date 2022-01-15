@@ -3,13 +3,13 @@ n_points = 100000
 
 model = dict(
     neck_with_head=dict(
-        n_classes=6,
+        n_classes=10,
         n_reg_outs=6,
         loss_bbox=dict(with_yaw=False)))
 
 dataset_type = 'DTAASDataset'
 data_root = 'data/dtaas/'
-class_names = ('bed', 'table', 'sofa', 'chair', 'lighting', 'storage_closet')
+class_names = ('door', 'window', 'table', 'desk', 'chair', 'sofa', 'storage_closet', 'tv', 'lighting', 'computer')
 train_pipeline = [
     dict(
         type='LoadPointsFromFile',
